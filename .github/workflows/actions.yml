@@ -27,6 +27,11 @@ jobs:
       with:
         args: --output ~/install-acme.sh https://get.acme.sh
     - name: Run acme.sh
+      env:
+        DOMAIN: ${{ secrets.DOMAIN }}
+        ACCESSKEYID: ${{ secrets.ACCESSKEYID }}
+        ACCESSSECRET: ${{ secrets.ACCESSSECRET }}
+        PRIVATEKEY: ${{ secrets.PRIVATEKEY }}
       run: |
         sh ~/install-acme.sh
         echo -e "SAVED_Ali_Key='${ACCESSKEYID}'" > ~/.acme.sh/account.conf
@@ -36,5 +41,10 @@ jobs:
         echo -e ${PRIVATEKEY} >> ~/.acme.sh/${DOMAIN}_ecc/
         ~/.acme.sh/acme.sh --force --renew-all -k ec-384
     - name: Update Aliyun CDN certificate.
+      env:
+        DOMAIN: ${{ secrets.DOMAIN }}
+        ACCESSKEYID: ${{ secrets.ACCESSKEYID }}
+        ACCESSSECRET: ${{ secrets.ACCESSSECRET }}
+        PRIVATEKEY: ${{ secrets.PRIVATEKEY }}
       run: |
         python main.py
