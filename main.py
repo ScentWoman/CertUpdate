@@ -13,7 +13,7 @@ accessSecret = os.getenv("ACCESSSECRET")
 apinode = "cn-shanghai"
 client = AcsClient(accessKeyID, accessSecret, apinode)
 
-with open("~/.acme.sh/" + domain + "_ecc/fullchain.cer") as f:
+with open(os.path.expanduser("~") + "/.acme.sh/" + domain + "_ecc/fullchain.cer") as f:
     certificate = f.read()
 privateKey = os.getenv("PRIVATEKEY")
 
