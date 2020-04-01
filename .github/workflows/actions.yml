@@ -23,10 +23,6 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-    - name: curl
-      uses: wei/curl@v1
-      with:
-        args: --output ~/install-acme.sh https://get.acme.sh
     - name: Run acme.sh
       env:
         DOMAIN: ${{ secrets.DOMAIN }}
@@ -34,7 +30,7 @@ jobs:
         ACCESSSECRET: ${{ secrets.ACCESSSECRET }}
         PRIVATEKEY: ${{ secrets.PRIVATEKEY }}
       run: |
-        sh ~/install-acme.sh
+        curl https://get.acme.sh | sh
         echo -e "SAVED_Ali_Key='${ACCESSKEYID}'" > ~/.acme.sh/account.conf
         echo -e "SAVED_Ali_Secret='${ACCESSSECRET}'" >> ~/.acme.sh/account.conf
         echo -e "USER_PATH=${PATH}" >> ~/.acme.sh/account.conf
