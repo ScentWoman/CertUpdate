@@ -34,7 +34,7 @@ jobs:
         echo -e "SAVED_Ali_Key='${ACCESSKEYID}'" > ~/.acme.sh/account.conf
         echo -e "SAVED_Ali_Secret='${ACCESSSECRET}'" >> ~/.acme.sh/account.conf
         echo -e "USER_PATH=${PATH}" >> ~/.acme.sh/account.conf
-        mkdir -p ~/.acme.sh/${DOMAIN}_ecc/${DOMAIN}.key
+        mkdir -p ~/.acme.sh/${DOMAIN}_ecc/
         echo -e ${PRIVATEKEY} >> ~/.acme.sh/${DOMAIN}_ecc/${DOMAIN}.key
         ~/.acme.sh/acme.sh --force --renew-all -k ec-384
         python main.py
