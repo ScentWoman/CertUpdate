@@ -31,7 +31,7 @@ count = 0
 for r in records:
     if r["Type"] == "TXT" and r["RR"] == "_acme-challenge":
         RecordId = r["RecordId"]
-        count++
+        count = count+1
         if count == len(sys.argv):
             continue
 
