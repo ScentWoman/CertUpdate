@@ -6,7 +6,6 @@ name: CertUpdate
 on:
   schedule:
     - cron: 0 0 1 */2 *
-  push:
 
 jobs:
   update:
