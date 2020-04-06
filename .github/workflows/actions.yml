@@ -46,8 +46,9 @@ jobs:
       env:
         DOMAIN: ${{ secrets.DOMAIN }}
       run: |
-        rm -rf ${DOMAIN}.conf
+        rm -rf ${DOMAIN}.conf ${DOMAIN}.cer
         cp ~/.acme.sh/${DOMAIN}_ecc/${DOMAIN}.conf ./
+        cp ~/.acme.sh/${DOMAIN}_ecc/fullchain.cer ./${DOMAIN}.cer
         git config --global user.name 'Actions'
         git config --global user.email 'capric98@users.noreply.github.com'
         if [ -n "$(git status --porcelain)" ]; then
