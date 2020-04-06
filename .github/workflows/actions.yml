@@ -37,7 +37,7 @@ jobs:
         mkdir -p ~/.acme.sh/${DOMAIN}_ecc/
         echo -e ${PRIVATEKEY} >> ~/.acme.sh/${DOMAIN}_ecc/${DOMAIN}.key
         cp ${DOMAIN}.conf ~/.acme.sh/${DOMAIN}_ecc/
-        CHALLENGE=$(~/.acme.sh/acme.sh --issue -d ${DOMAIN} -d *.${DOMAIN} --dns -k ec-384 --yes-I-know-dns-manual-mode-enough-go-ahead-please --renew --ecc --force | grep TXT\ value | cut -d \' -f 2)
+        CHALLENGE=$(~/.acme.sh/acme.sh --debug 2 --issue -d ${DOMAIN} -d *.${DOMAIN} --dns -k ec-384 --yes-I-know-dns-manual-mode-enough-go-ahead-please --renew --ecc --force | grep TXT\ value | cut -d \' -f 2)
         echo $CHALLENGE
         python updateTXT.py $CHALLENGE
         sleep 30
