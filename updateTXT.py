@@ -26,17 +26,21 @@ request.set_DomainName(domain)
 response = client.do_action_with_exception(request)
 records = json.loads(str(response, encoding='utf-8'))
 records = records["DomainRecords"]["Record"]
+
+count = 0
 for r in records:
     if r["Type"] == "TXT" and r["RR"] == "_acme-challenge":
         RecordId = r["RecordId"]
-        break
+        count++
+        if count == len(sys.argv):
+            continue
 
-request = UpdateDomainRecordRequest()
-request.set_accept_format('json')
-
-request.set_RecordId(RecordId)
-request.set_RR("_acme-challenge")
-request.set_Type("TXT")
-request.set_Value(str(sys.argv[1]))
-response = client.do_action_with_exception(request)
-print(str(response, encoding='utf-8'))
+        request = UpdateDomainRecordRequest()
+        request.set_accept_format('json')
+        request.set_RecordId(RecordId)
+        request.set_RR("_acme-challenge")
+        request.set_Type("TXT")
+        request.set_Value(str(sys.argv[count]))
+        response = client.do_action_with_exception(request) 
+        print(str(response, encoding='utf-8'))
+        print("Update TXT RecordId="+RecordId, "to", "\""+str(sys.argv[count])+"\"")
