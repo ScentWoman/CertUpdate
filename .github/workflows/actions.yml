@@ -38,10 +38,11 @@ jobs:
         cp ${DOMAIN}.conf ~/.acme.sh/${DOMAIN}_ecc/
         CHALLENGE=$(~/.acme.sh/acme.sh --issue -d ${DOMAIN} -d *.${DOMAIN} --dns -k ec-384 --yes-I-know-dns-manual-mode-enough-go-ahead-please --renew --ecc --force | grep TXT\ value | cut -d \' -f 2)
         echo $CHALLENGE
-        python updateTXT.py $CHALLENGE
+        python addTXT.py $CHALLENGE
         sleep 30
         ~/.acme.sh/acme.sh --issue -d ${DOMAIN} -d *.${DOMAIN} --dns -k ec-384 --yes-I-know-dns-manual-mode-enough-go-ahead-please --renew --ecc --force
         python main.py
+        python deleteTXT.py
     - name: Update repo.
       env:
         DOMAIN: ${{ secrets.DOMAIN }}
